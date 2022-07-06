@@ -16,32 +16,37 @@ const res2 = path.join(__dirname, "/responses/response2.txt");
 
 // Read files - use readFile method with above paths
 
-let storeRes1;
-let storeRes2;
+const readFromFile = (file) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, { encoding: "utf8" }, (err, data) => {
+      if (err) {
+        reject(err);
+        console.log(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
 
-fs.readFile(res1, { encoding: "utf8" }, (err, data) => {
-  if (err) throw err;
-  storeRes1 = data;
-  console.log(data);
-});
-fs.readFile(res2, { encoding: "utf8" }, (err, data) => {
-  if (err) throw err;
-  storeRes2 = data;
-  console.log(data);
-});
+const promises = [readFromFile(res1), readFromFile(res2)];
 
-// Write concatenation of results  to file ./responses/result-async.txt with method writeFile
+Promise.all(promises).then((result) => {
+  let storeRes1 = result[0];
+  let storeRes2 = result[1];
+  const pathResult = path.join(__dirname, "/responses/result-async.txt");
 
-const pathResult = path.join(__dirname, "/responses/result-async.txt");
+  // Write concatenation of results  to file ./responses/result-async.txt with method writeFile
 
-fs.writeFile(pathResult, `Result1: ${storeRes1} \r\n`, (err) => {
-  if (err) throw err;
-  console.log("1-Everything is ok.");
-});
+  fs.writeFile(pathResult, `Result1: ${storeRes1} \r\n`, (err) => {
+    if (err) throw err;
+    console.log("1-Everything is ok.");
+  });
 
-fs.appendFile(pathResult, `Result2: ${storeRes2}`, (err) => {
-  if (err) throw err;
-  console.log("2-Everything is ok");
+  fs.appendFile(pathResult, `Result2: ${storeRes2}`, (err) => {
+    if (err) throw err;
+    console.log("2-Everything is ok");
+  });
 });
 
 // result.txt should contain below text:
