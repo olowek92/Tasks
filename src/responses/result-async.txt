@@ -1,2 +1,1 @@
-Result1: This is first response 
-Result2: This is second response
+Result1: undefined 

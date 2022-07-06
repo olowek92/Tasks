@@ -34,17 +34,15 @@ fs.readFile(res2, { encoding: "utf8" }, (err, data) => {
 
 const pathResult = path.join(__dirname, "/responses/result-async.txt");
 
-setTimeout(() => {
-  fs.writeFile(pathResult, `Result1: ${storeRes1} \r\n`, (err) => {
-    if (err) throw err;
-    console.log("1-Everything is ok.");
-  });
+fs.writeFile(pathResult, `Result1: ${storeRes1} \r\n`, (err) => {
+  if (err) throw err;
+  console.log("1-Everything is ok.");
+});
 
-  fs.appendFile(pathResult, `Result2: ${storeRes2}`, (err) => {
-    if (err) throw err;
-    console.log("2-Everything is ok");
-  });
-}, 1000);
+fs.appendFile(pathResult, `Result2: ${storeRes2}`, (err) => {
+  if (err) throw err;
+  console.log("2-Everything is ok");
+});
 
 // result.txt should contain below text:
 // Result1: This is first response,
