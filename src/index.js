@@ -1,3 +1,3 @@
 // console.log("Hello");
 
-const score = require("./05-fs-sync.js");
+const score = require("./06-fs-async.js");
